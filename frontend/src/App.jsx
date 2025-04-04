@@ -16,6 +16,7 @@ export const App = () => {
   
   return (
     <div>
+        <header>
        <div>
       <nav className='navbar navbar-expand-lg navbar-light bg-light border sticky-top'>
         <div className='container-fluid'>
@@ -25,7 +26,7 @@ export const App = () => {
             </button>
 
             <div className='collapse navbar-collapse justify-content-evenly' id='navbarNav'>
-            <ul className='navbar-nav me-auto mb-2 mb-lg-0 p-3 d-flex justify-content-evenly w-100'>
+           <ul className='navbar-nav me-auto mb-2 mb-lg-0 p-3 d-flex justify-content-evenly w-100'>
                 <li className='nav-item'>
                     <a className='nav-link' href="#home">Home</a>
                 </li>
@@ -34,15 +35,12 @@ export const App = () => {
                     <a className='nav-link' href="#jobs">Jobs</a>
                 </li>
 
-
-
-
                 <li className='nav-item'>
                     <a className='nav-link' href="#chat">Chat with AI</a>
                 </li>
                 
                 <li className='nav-item'>
-                    <a className='nav-link' href="#dashboard">My Dashboard</a>
+                    <a className='nav-link' href="#dashboard">My Profile</a>
                 </li>
                 
                 <li className='nav-item'>
@@ -57,7 +55,9 @@ export const App = () => {
         </div>
       </nav>
       <br></br>
-      </div>
+      </div> 
+      </header>
+
       <Home />
       <Job /> 
       <Chatbot />

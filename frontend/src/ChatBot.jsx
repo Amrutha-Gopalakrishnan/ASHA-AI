@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import "./App.css";
 import ChatHistory from "./ChatHistory";
 import Load from "./Load";
 
@@ -51,68 +50,6 @@ const ChatBot = () => {
 
 
   return (
-//     <div id="chat">
-//                 <h1 className="fw-bold text-center">Meet ASHA AI</h1>
-
-//       <div className="container mt-4 d-flex justify-content-center">
-//       <div className="card shadow-lg border-0 " style={{ width: "60rem" }}>
-//         <div className="card-body">
-//           <p className="card-text text-center">
-//             ASHA AI is your smart companion for job preparation and interview success. 
-//             Whether you're looking for personalized interview tips, trending job roles, 
-//             or expert guidance, ASHA AI provides real-time answers tailored to your career goals.
-//             Empowering women with intelligent insights, ASHA AI bridges the gap between ambition and achievement.
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//       {/* <div className=" container card   p-5 m-5 shadow-sm d-flex justify-content-center align-item-center" style={{ width: "70rem" }}>
-//         <ChatHistory chatHistory={chatHistory} />
-//         <Load isLoading={isLoading} />
-//       </div> */}
-//       <div className="container d-flex flex-column align-items-center mt-4">
-//   <div className="card w-75 mb-3 p-3">
-//     <div className="chat-box" style={{ height: "300px", overflowY: "auto", backgroundColor: "#f8f9fa" }}>
-//       <ChatHistory chatHistory={chatHistory} />
-//       <Loading isLoading={isLoading} />
-//     </div>
-//   </div>
-
-//       {/* <div className="d-flex justify-content-center align-item-center card-body mt-4" style={{ width: "70rem" }}>
-//         <input
-//           type="text"
-//           className="form-control d-flex justify-content-center align-item-center ms-5"
-//           placeholder="Type your message..."
-//           value={userInput}
-//           onChange={handleUserInput}
-//         /> */}
-
-// <div className="card w-50 p-3">
-//     <div className="input-group">
-//       <input
-//         type="text"
-//         className="form-control"
-//         placeholder="Type your message..."
-//         value={userInput}
-//         onChange={handleUserInput}
-//       />
-        
-//         <button className="btn btn-primary"  onClick={sendMessage} disabled={isLoading}>
-//           Send
-//         </button>
-
-//         <button className="btn btn-primary ms-2" onClick={clearChat} disabled={isLoading}>
-//           Clear Chat
-//         </button>
-
-//       </div>
-//     </div>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default ChatBot;
 
 <div id="chat" className="mt-4 pt-4">
       <h1 className="fw-bold text-center">Meet ASHA AI</h1>

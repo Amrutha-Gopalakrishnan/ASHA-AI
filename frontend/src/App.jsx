@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './Home';
@@ -8,15 +8,25 @@ import Job from './Job'
 import Chatbot from './ChatBot';
 import Contact from './Contact';
 import Footer from './Footer';
-
+import Login from './Login';
 
 
 
 export const App = () => {
-  
+
+    const [isLogin, setIsLogin] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // NEW STATE
+
+  const toggleForm = () => setIsLogin(!isLogin);
+  const handleLogin = () => setIsAuthenticated(true); // Trigger this on successful login/signup
+
   return (
     <div>
-        <header>
+        {!isAuthenticated ? (
+        <Login isLogin={isLogin} toggleForm={toggleForm} onLogin={handleLogin} />
+      ) : (
+        <>
+           <header>
        <div>
       <nav className='navbar navbar-expand-lg navbar-light bg-light border sticky-top'>
         <div className='container-fluid'>
@@ -36,7 +46,7 @@ export const App = () => {
                 </li>
 
                 <li className='nav-item'>
-                    <a className='nav-link' href="#chat">Chat with AI</a>
+                    <a className='nav-link' href="#chat">Meet ASHA AI</a>
                 </li>
                 
                 <li className='nav-item'>
@@ -47,9 +57,6 @@ export const App = () => {
                     <a className='nav-link' href="#contact">Contact</a>
                 </li>
 
-                <li className='nav-item '>
-                    <a className='nav-link' href="#sign">Login/SignUp</a>
-                </li>
             </ul>
             </div>
         </div>
@@ -64,7 +71,9 @@ export const App = () => {
       <Contact />
       <Footer />
       
-     
+     </>
+
+      )}
 
     </div>
   )

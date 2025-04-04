@@ -1,85 +1,171 @@
 import React, { useState } from "react";
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import "./App.css";
+import ChatHistory from "./ChatHistory";
+import Load from "./Load";
 
-const Chatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+const ChatBot = () => {
+  const [userInput, setUserInput] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load API key from environment variables
+  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+  if (!API_KEY) {
+    console.error("API Key is missing! Add VITE_GEMINI_API_KEY in .env file.");
+  }
+
+  const genAI = new GoogleGenerativeAI(API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+  const handleUserInput = (e) => {
+    setUserInput(e.target.value);
+  };
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (userInput.trim() === "") return;
 
-    const userMessage = { text: input, sender: "user" };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-
+    setIsLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/chat", {
-        message: input,
-      });
+      const result = await model.generateContent(userInput);
+      const response = await result.response;
+      console.log(response);
 
-      const botMessage = { text: response.data.reply, sender: "bot" };
-      setMessages((prev) => [...prev, botMessage]);
+      setChatHistory([
+        ...chatHistory,
+        { type: "user", message: userInput },
+        { type: "bot", message: response.text() },
+      ]);
     } catch (error) {
-      console.error("Error fetching response:", error);
+      console.error("Error sending message", error);
+    } finally {
+      setUserInput("");
+      setIsLoading(false);
     }
   };
 
+  const clearChat = () => {
+    setChatHistory([]);
+  };
+
+
   return (
-    <div id="chat">
-        <section id="chat" className="mt-4 pt-4">
-            <br></br>
-            <h1 className="fw-bold text-center">Chat with AI</h1>
-            <p className="fw-bold text-center fs-4 pt-2">ASHA AI Chatbot 🤖</p>
-            <div className="container">
-            <p className="fs-5 pt-2 text-center">The ASHA AI Chatbot is your personal AI assistant designed to help with interview preparation, answer queries, and solve issues instantly. Whether you need guidance on interview questions, career advice, or troubleshooting support, ASHA AI is here to assist you!
-💬 Ask your queries now and get instant solutions! 🚀</p>
-</div>
-    <div className="container mt-1">
-      <div className="card pt-1">
-        <div 
-          className="chat-box d-flex align-items-center justify-content-center"
-          style={{ 
-            height: "300px", 
-            overflowY: "auto", 
-            backgroundColor: "#f8f9fa",
-            position: "relative",
-            textAlign: "center"
-          }}
-        >
-          {messages.length === 0 ? (
-            <p 
-              className="text-muted position-absolute top-50 start-50 translate-middle"
-              style={{ fontSize: "18px", fontWeight: "500" }}
-            >
-              ASHA AI Chatbot
+//     <div id="chat">
+//                 <h1 className="fw-bold text-center">Meet ASHA AI</h1>
+
+//       <div className="container mt-4 d-flex justify-content-center">
+//       <div className="card shadow-lg border-0 " style={{ width: "60rem" }}>
+//         <div className="card-body">
+//           <p className="card-text text-center">
+//             ASHA AI is your smart companion for job preparation and interview success. 
+//             Whether you're looking for personalized interview tips, trending job roles, 
+//             or expert guidance, ASHA AI provides real-time answers tailored to your career goals.
+//             Empowering women with intelligent insights, ASHA AI bridges the gap between ambition and achievement.
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//       {/* <div className=" container card   p-5 m-5 shadow-sm d-flex justify-content-center align-item-center" style={{ width: "70rem" }}>
+//         <ChatHistory chatHistory={chatHistory} />
+//         <Load isLoading={isLoading} />
+//       </div> */}
+//       <div className="container d-flex flex-column align-items-center mt-4">
+//   <div className="card w-75 mb-3 p-3">
+//     <div className="chat-box" style={{ height: "300px", overflowY: "auto", backgroundColor: "#f8f9fa" }}>
+//       <ChatHistory chatHistory={chatHistory} />
+//       <Loading isLoading={isLoading} />
+//     </div>
+//   </div>
+
+//       {/* <div className="d-flex justify-content-center align-item-center card-body mt-4" style={{ width: "70rem" }}>
+//         <input
+//           type="text"
+//           className="form-control d-flex justify-content-center align-item-center ms-5"
+//           placeholder="Type your message..."
+//           value={userInput}
+//           onChange={handleUserInput}
+//         /> */}
+
+// <div className="card w-50 p-3">
+//     <div className="input-group">
+//       <input
+//         type="text"
+//         className="form-control"
+//         placeholder="Type your message..."
+//         value={userInput}
+//         onChange={handleUserInput}
+//       />
+        
+//         <button className="btn btn-primary"  onClick={sendMessage} disabled={isLoading}>
+//           Send
+//         </button>
+
+//         <button className="btn btn-primary ms-2" onClick={clearChat} disabled={isLoading}>
+//           Clear Chat
+//         </button>
+
+//       </div>
+//     </div>
+//     </div>
+//     </div>
+//   );
+// };
+
+// export default ChatBot;
+
+<div id="chat" className="mt-4 pt-4">
+      <h1 className="fw-bold text-center">Meet ASHA AI</h1>
+
+      <div className="container mt-4 d-flex justify-content-center">
+        <div className="card shadow-lg border-0" style={{ width: "60rem" }}>
+          <div className="card-body">
+            <p className="card-text text-center">
+              ASHA AI is your smart companion for job preparation and interview success.
+              Whether you're looking for personalized interview tips, trending job roles,
+              or expert guidance, ASHA AI provides real-time answers tailored to your career goals.
             </p>
-          ) : (
-            <div className="w-100">
-              {messages.map((msg, index) => (
-                <div key={index} className={`alert ${msg.sender === "user" ? "alert-primary" : "alert-secondary"}`}>
-                  <strong>{msg.sender === "user" ? "You" : "Asha AI"}:</strong> {msg.text}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="input-group mt-1">
-          <input
-            type="text"
-            className="form-control"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about interview questions..."
-          />
-          <button className="btn btn-primary">Send</button>
+          </div>
         </div>
       </div>
-    </div>
-    </section>
-    <br></br>
+
+      <div className="container d-flex flex-column align-items-center mt-4">
+        {/* Chat Box */}
+        <div className="card w-75 mb-3 p-3">
+          <div
+            className="chat-box"
+            style={{
+              height: "300px",
+              overflowY: "auto",
+              backgroundColor: "#f8f9fa",
+            }}
+          >
+            <ChatHistory chatHistory={chatHistory} />
+            <Load isLoading={isLoading} />
+          </div>
+        </div>
+
+        {/* Input Box */}
+        <div className="card w-50 p-3">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Type your message..."
+              value={userInput}
+              onChange={handleUserInput}
+            />
+            <button className="btn btn-primary ms-2 rounded" onClick={sendMessage} disabled={isLoading}>
+              Send
+            </button>
+            <button className="btn btn-danger ms-2 rounded" onClick={clearChat} disabled={isLoading}>
+              Clear Chat
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Chatbot;
+export default ChatBot;

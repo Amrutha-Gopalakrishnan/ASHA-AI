@@ -80,9 +80,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <br></br>
+   
     </div>
-    <br></br>
+   
   
       </section>
 

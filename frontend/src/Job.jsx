@@ -5,8 +5,8 @@ import Content from './Content'
 
 const Head = () => {
   return (
-    <div>
-                 <h1 id='jobs' className='fw-bold text-center pt-4 mt-4' style={{zIndex:"10"}}>Jobs On Trend</h1>
+    <div id='jobs' className='pt-4 mt-4'>
+                 <h1 className='fw-bold text-center' style={{zIndex:"10"}}>Jobs On Trend</h1>
            <Router>
           <SearchBar />
             </Router>

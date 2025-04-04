@@ -2,7 +2,6 @@ import React, { useState} from 'react'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './Home';
-import './app.css'
 import './index.css'
 import Job from './Job'
 import Chatbot from './ChatBot';

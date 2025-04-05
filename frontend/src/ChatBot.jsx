@@ -91,11 +91,12 @@ const ChatBot = () => {
               placeholder="Type your message..."
               value={userInput}
               onChange={handleUserInput}
+              style={{width:"200px"}}
             />
-            <button className="btn btn-primary ms-2 rounded" onClick={sendMessage} disabled={isLoading}>
+            <button className="btn btn-primary text-center d-flex justify-content-center align-item-center ms-2 mt-4 rounded" onClick={sendMessage} disabled={isLoading}>
               Send
             </button>
-            <button className="btn btn-danger ms-2 rounded" onClick={clearChat} disabled={isLoading}>
+            <button className="btn btn-danger text-center d-flex justify-content-center align-item-center ms-2 mt-4 rounded" onClick={clearChat} disabled={isLoading}>
               Clear Chat
             </button>
           </div>

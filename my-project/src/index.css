@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* App.css */
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+a{
+  color: purple;
+  padding: 15px;
+}

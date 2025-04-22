@@ -39,8 +39,14 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        
       <form onSubmit={handleRegister} className="bg-white p-6 shadow-lg rounded w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+      <div className="flex items-left space-x-2">
+          <img src="images/logo.jpg" alt="Logo" className="w-8 h-8" /> {/* Update path */}
+          <span className="text-xl font-bold text-purple-700 mb-4">Asha AI</span>
+        </div>
+        <h2 className="text-2xl font-bold text-center text-center">Registration Form</h2>
+        <p className='text-center text mb-4'>Regsiter to apply for jobs of your choice all over the world</p>
         <div className="flex justify-center mb-6">
          <img
             src="/images/login.png" // make sure this path is correct (inside public folder)
@@ -54,7 +60,7 @@ function Register() {
         <input type="password" name="password" placeholder="Password" className="w-full border p-2 rounded mb-3" onChange={handleChange} required />
         <input type="text" name="mobile" placeholder="Mobile" className="w-full border p-2 rounded mb-3" onChange={handleChange} required />
 
-        <label className="text-sm text-gray-600 mb-3 flex items-center">
+        <label className="text-sm text-gray-600 mb-3 ms-2 flex items-center">
           <input type="checkbox" className="mr-2" checked={agreed} onChange={() => setAgreed(!agreed)} />
           Send me important updates & promotions via SMS, email, and WhatsApp
         </label>

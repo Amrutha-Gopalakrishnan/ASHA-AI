@@ -29,7 +29,12 @@ function Login() {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-50">
       <form onSubmit={handleLogin} className="bg-white p-6 shadow-lg rounded w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+      <div className="flex items-left space-x-2">
+          <img src="images/logo.jpg" alt="Logo" className="w-8 h-8" /> {/* Update path */}
+          <span className="text-xl font-bold text-purple-700 mb-4">Asha AI</span>
+        </div>
+        <h2 className="text-2xl font-bold  text-center">Login to your Account</h2>
+        <p className='text mb-4 text-center'>Welcome back!</p>
         <div className="flex justify-center mb-6">
          <img
             src="/images/login.png" // make sure this path is correct (inside public folder)

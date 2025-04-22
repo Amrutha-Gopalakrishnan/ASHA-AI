@@ -1,20 +1,3 @@
-// import React from 'react'
-
-
-// export default function JobCard({ job }) {
-//     return (
-//       <div className="card shadow-sm">
-//         <div className="card-body">
-//           <h5 className="card-title">{job.job_title}</h5>
-//           <h6 className="card-subtitle mb-2 text-muted">{job.employer_name}</h6>
-//           <p className="card-text">{job.job_city}, {job.job_country}</p>
-//           <a href={job.job_apply_link} className="btn btn-outline-primary" target="_blank" rel="noreferrer">
-//             Apply Now
-//           </a>
-//         </div>
-//       </div>
-//     );
-//   }
   
 import React from 'react';
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { FaRegHandPointLeft, FaRegHandPointRight } from "react-icons/fa";
 
 const testimonials = [
   {
@@ -44,7 +45,7 @@ export default function Testimonials() {
   };
 
   return (
-    <div className="w-full px-6 py-10 bg-gradient-to-r from-purple-100 to-white text-center mt-10">
+    <div className=" font-poppins font-normal  w-full px-6 py-10 bg-gradient-to-r from-purple-100 to-white text-center mt-10">
       <h2 className="text-3xl font-bold mb-10">
         Our <span className="text-purple-700 underline">Testimonials</span>
       </h2>
@@ -92,13 +93,13 @@ export default function Testimonials() {
           onClick={handlePrev}
           className="bg-purple-500 text-white px-4 py-1 rounded-full hover:bg-purple-600"
         >
-          ⬅ Prev
+          <FaRegHandPointLeft />
         </button>
         <button
           onClick={handleNext}
           className="bg-purple-500 text-white px-4 py-1 rounded-full hover:bg-purple-600"
         >
-          Next ➡
+         <FaRegHandPointRight />
         </button>
       </div>
     </div>

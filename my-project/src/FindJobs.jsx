@@ -65,6 +65,7 @@ const FeaturedJobs = () => {
         <button
           className="bg-purple-700 hover:bg-purple-800 text-white font-semibold px-4 py-1 rounded-3 mt-3 md:mt-0"
           onClick={fetchJobs}
+         
         >
           Find Jobs
         </button>

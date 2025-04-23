@@ -1,22 +1,38 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll'
 
 const Home = () => {
   return (
-    <div className="font-sans bg-white min-h-screen">
+    <div className=" bg-white min-h-screen">
       
-      <nav className="flex justify-between items-center p-4 px-8 shadow-md bg-white sticky top-0  z-50 border-b border-gray-200">
+      <nav className="flex justify-between items-center p-3 px-8 shadow-md bg-white sticky top-0  z-50 border-b border-gray-200">
         <div className="flex items-center space-x-2">
           <img src="images/logo.jpg" alt="Logo" className="w-8 h-8" /> {/* Update path */}
           <span className="text-xl font-bold text-purple-700">Asha AI</span>
         </div>
-        <ul className="hidden md:flex space-x-8 text-black-800 font-medium border border-purple-700 rounded-full px-10 py-3">
-          <li><a href="#home" className="text-decoration-none">Home</a></li>
-          <li><a href="#job" className="text-decoration-none ">Find Jobs</a></li>
-          <li><a href="#about" className="text-decoration-none ">About Us</a></li>
-          <li><a href="#contact" className="text-decoration-none">Contact Us</a></li>
-          <li className="text-purple-700 text-2xl"><FaUserCircle /></li>
+
+<ul className="hidden md:flex items-center space-x-10 font-medium text-purple-700 border border-purple-300 rounded-full px-8  bg-white shadow-sm ">
+          <li>
+            <ScrollLink to="home" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Home</ScrollLink>
+          </li>
+          <li>
+            <ScrollLink to="job" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Find Jobs</ScrollLink>
+          </li>
+          <li>
+            <ScrollLink to="about" smooth={true} offset={-80} duration={200} className="cursor-pointer ">About Us</ScrollLink>
+          </li>
+          <li>
+            <ScrollLink to="contact" smooth={true} offset={-80} duration={200} className="cursor-pointer ">Contact Us</ScrollLink>
+          </li>
+          <li className="text-purple-700 text-2xl">
+            <RouterLink to="/login">
+              <FaUserCircle title="Go to Login" />
+            </RouterLink>
+          </li>
         </ul>
+
         <div></div>
       </nav>
 

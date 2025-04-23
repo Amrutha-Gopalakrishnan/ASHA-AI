@@ -1,0 +1,64 @@
+import React, { useState} from "react";
+import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll'
+
+const Nav = () => {
+  const [navOpen, setNavOpen] = useState(false);
+
+  return (
+    <div className=" bg-white sticky top-0 ">
+
+              <nav className="z-50 bg-white shadow-md border-b border-gray-200 px-4 py-2 ">
+                <div className="  flex justify-between items-center space-x-2">
+                  <div className="flex items-center space-x-2">
+                  <img src="images/logo.jpg" alt="Logo" className="w-8 h-8" /> {/* Update path */}
+                  <span className="text-xl font-bold text-purple-700">Asha AI</span>
+        
+                  </div>
+                
+        
+        <ul className="hidden md:flex items-center space-x-10 font-medium text-purple-700 border border-purple-300 rounded-full px-8  bg-white shadow-sm ">
+                  <li>
+                    <ScrollLink to="home" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Home</ScrollLink>
+                  </li>
+                  <li>
+                    <ScrollLink to="job" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Find Jobs</ScrollLink>
+                  </li>
+                  <li>
+                    <ScrollLink to="about" smooth={true} offset={-80} duration={200} className="cursor-pointer ">About Us</ScrollLink>
+                  </li>
+                  <li>
+                    <ScrollLink to="contact" smooth={true} offset={-80} duration={200} className="cursor-pointer ">Contact Us</ScrollLink>
+                  </li>
+                  <li className="text-purple-700 text-2xl">
+                    <RouterLink to="/login">
+                      <FaUserCircle title="Go to Login" />
+                    </RouterLink>
+                  </li>
+                </ul>
+
+                <div></div>
+                
+        
+                {/* Mobile Menu Button */}
+                <button className="md:hidden text-purple-700 text-2xl" onClick={() => setNavOpen(!navOpen)}>
+                    {navOpen ? <FaTimes /> : <FaBars />}
+                  </button>
+                </div>
+        
+                {navOpen && (
+                  <ul className="md:hidden mt-2 flex flex-col items-center gap-3 text-purple-700 font-medium py-2 border-t border-gray-200">
+                    <li><ScrollLink to="home" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">Home</ScrollLink></li>
+                    <li><ScrollLink to="job" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">Find Jobs</ScrollLink></li>
+                    <li><ScrollLink to="about" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">About Us</ScrollLink></li>
+                    <li><ScrollLink to="contact" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">Contact Us</ScrollLink></li>
+                    <li className="text-xl"><RouterLink to="/login"><FaUserCircle /></RouterLink></li>
+                  </ul>
+                )}
+        
+              </nav> 
+        </div>
+  )
+}
+    export default Nav

@@ -1,7 +1,16 @@
   
-import React from 'react';
+import React, { useState }from 'react';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
+
 
 export default function JobCard({ job }) {
+
+  const [bookmarked, setBookmarked] = useState(false); // Track bookmarked state
+
+  const toggleBookmark = () => {
+    setBookmarked(prev => !prev);
+  };
+
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-md p-4 w-full max-w-sm hover:shadow-lg transition duration-300">
       <div className="flex justify-between items-center mb-2">
@@ -31,6 +40,11 @@ export default function JobCard({ job }) {
         <a href={job.job_apply_link} target="_blank" rel="noreferrer" className="px-4 py-1 bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700">
           Apply now
         </a>
+
+        <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3 ms-2">
+          {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+        </button>
+
       </div>
     </div>
   );

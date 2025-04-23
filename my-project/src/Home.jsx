@@ -1,44 +1,18 @@
 import React from "react";
-import { FaUserCircle } from "react-icons/fa";
-import { Link as RouterLink } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll'
+// import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+// import { Link as RouterLink } from 'react-router-dom';
+// import { Link as ScrollLink } from 'react-scroll'
 
 const Home = () => {
+//   const [navOpen, setNavOpen] = useState(false);
+
   return (
-    <div className=" bg-white min-h-screen">
+    <div className="p-0">
       
-      <nav className="flex justify-between items-center p-3 px-8 shadow-md bg-white sticky top-0  z-50 border-b border-gray-200">
-        <div className="flex items-center space-x-2">
-          <img src="images/logo.jpg" alt="Logo" className="w-8 h-8" /> {/* Update path */}
-          <span className="text-xl font-bold text-purple-700">Asha AI</span>
-        </div>
-
-<ul className="hidden md:flex items-center space-x-10 font-medium text-purple-700 border border-purple-300 rounded-full px-8  bg-white shadow-sm ">
-          <li>
-            <ScrollLink to="home" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Home</ScrollLink>
-          </li>
-          <li>
-            <ScrollLink to="job" smooth={true} offset={-80} duration={200} className="cursor-pointer  ">Find Jobs</ScrollLink>
-          </li>
-          <li>
-            <ScrollLink to="about" smooth={true} offset={-80} duration={200} className="cursor-pointer ">About Us</ScrollLink>
-          </li>
-          <li>
-            <ScrollLink to="contact" smooth={true} offset={-80} duration={200} className="cursor-pointer ">Contact Us</ScrollLink>
-          </li>
-          <li className="text-purple-700 text-2xl">
-            <RouterLink to="/login">
-              <FaUserCircle title="Go to Login" />
-            </RouterLink>
-          </li>
-        </ul>
-
-        <div></div>
-      </nav>
 
       {/* Hero Section */}
       <section className="flex flex-col-reverse lg:flex-row items-center justify-between px-8 py-16 bg-gradient-to-br from-white via-violet-50 to-purple-100" id="home">
-        <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
+        <div className="w-full lg:w-1/2  lg:mb-0">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-snug">
             Welcome to ASHA AI <br />
             Your AI-powered career assistant for women

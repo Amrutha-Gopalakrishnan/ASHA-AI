@@ -41,7 +41,7 @@ export default function JobCard({ job }) {
           Apply now
         </a>
 
-        <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3 ms-2">
+        <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3 ">
           {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
         </button>
 

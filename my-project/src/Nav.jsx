@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaSignOutAlt, FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll'
 
@@ -33,9 +33,14 @@ const Nav = () => {
                   </li>
                   <li className="text-purple-700 text-2xl">
                     <RouterLink to="/login">
-                      <FaUserCircle title="Go to Login" />
+                      <FaSignOutAlt title="Go to Login" />
                     </RouterLink>
                   </li>
+                  <li className="text-purple-900 text-2xl pl-3">
+                  <RouterLink to="/userprofile">
+                      <FaUserCircle title="Go to UserProfile" />
+                    </RouterLink>
+                    </li>
                 </ul>
 
                 <div></div>

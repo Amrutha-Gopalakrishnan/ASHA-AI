@@ -11,6 +11,8 @@ import ChatBot from './ChatBot';
 import Login from './Login';
 import Regsiter from './Regsiter';
 import Nav from './Nav';
+import UserProfile from './UserProfile';
+import Dashboard from './Dashboard'
 
 const MainPage = () => (
   <>
@@ -31,6 +33,9 @@ const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Regsiter />} />
+        <Route path="/userprofile" element={<UserProfile />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+
       </Routes>
   
   );

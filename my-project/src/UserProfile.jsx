@@ -75,7 +75,7 @@ export default function App() {
         </button>
 
         {sidebarOpen && (
-          <div className="w-64 p-6">
+          <div className="w-53 p-6">
             <ul>
               <li
                 className="mb-6 cursor-pointer hover:underline"

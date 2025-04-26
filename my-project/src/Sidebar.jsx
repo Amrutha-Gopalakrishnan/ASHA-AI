@@ -6,7 +6,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-purple-700 min-h-screen p-4 text-white flex flex-col">
+    <div className="bg-purple-700 min-h-screen p-2 text-white flex flex-col">
       {/* Hamburger Menu */}
       <div className="flex items-center justify-between">
         <button onClick={() => setIsOpen(!isOpen)}>
@@ -17,7 +17,7 @@ const Sidebar = () => {
 
       {/* Sidebar Links */}
       {isOpen && (
-        <div className="mt-10 flex flex-col space-y-4">
+        <div className="mt-10 flex flex-col space-y-2">
           <Link to="/profile" className="hover:bg-purple-500 p-2 rounded">User Profile</Link>
           <Link to="/dashboard" className="hover:bg-purple-500 p-2 rounded">Dashboard</Link>
         </div>

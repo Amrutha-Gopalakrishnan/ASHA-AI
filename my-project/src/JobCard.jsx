@@ -1,14 +1,62 @@
-  
-import React, { useState }from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
-
+import { supabase } from './supabaseClient';
+import toast from 'react-hot-toast';
 
 export default function JobCard({ job }) {
+  const [bookmarked, setBookmarked] = useState(false);
 
-  const [bookmarked, setBookmarked] = useState(false); // Track bookmarked state
+  useEffect(() => {
+    checkIfBookmarked();
+  }, []);
 
-  const toggleBookmark = () => {
-    setBookmarked(prev => !prev);
+  const checkIfBookmarked = async () => {
+    const { data } = await supabase
+      .from('saved_jobs')
+      .select('id')
+      .eq('job_id', job.job_id)
+      .single();
+    setBookmarked(!!data);
+  };
+
+  const handleApply = async () => {
+    const jobData = {
+      job_id: job.job_id,
+      title: job.job_title,
+      company: job.employer_name,
+      location: `${job.job_city}, ${job.job_country}`,
+      logo: job.employer_logo,
+      employment_type: job.job_employment_type,
+      apply_link: job.job_apply_link,
+      timeAgo: new Date().toISOString(),
+    };
+
+    await supabase.from('applied_jobs').upsert(jobData);
+    await supabase.from('recently_viewed').upsert(jobData);
+
+    toast.success('Job applied and saved!');
+    window.open(job.job_apply_link, '_blank');
+  };
+
+  const toggleBookmark = async () => {
+    if (!bookmarked) {
+      const jobData = {
+        job_id: job.job_id,
+        title: job.job_title,
+        company: job.employer_name,
+        location: `${job.job_city}, ${job.job_country}`,
+        logo: job.employer_logo,
+        employment_type: job.job_employment_type,
+        apply_link: job.job_apply_link,
+        timeAgo: new Date().toISOString(),
+      };
+      await supabase.from('saved_jobs').insert(jobData);
+      toast.success('Job bookmarked!');
+    } else {
+      await supabase.from('saved_jobs').delete().eq('job_id', job.job_id);
+      toast.success('Job removed from bookmarks!');
+    }
+    setBookmarked(!bookmarked);
   };
 
   return (
@@ -17,34 +65,19 @@ export default function JobCard({ job }) {
         <span className={`text-xs font-semibold ${job.job_employment_type === "FULLTIME" ? "text-purple-600" : "text-green-600"}`}>
           {job.job_employment_type}
         </span>
-        <span className="text-sm text-gray-600">
-          {job.job_min_salary && job.job_max_salary
-            ? `Salary: ${job.job_min_salary} - ${job.job_max_salary} ${job.job_salary_currency || ''}`
-            : 'Salary: N/A'}
-        </span>
       </div>
 
       <h3 className="text-lg font-semibold mb-1">{job.job_title}</h3>
       <p className="text-sm text-gray-700 mb-1">{job.employer_name}</p>
       <p className="text-xs text-gray-500 mb-4">{job.job_city}, {job.job_country}</p>
 
-      <div className="flex -space-x-2 mb-3">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" className="w-6 h-6 rounded-full border-2 border-white" />
-        <img src="https://randomuser.me/api/portraits/women/45.jpg" className="w-6 h-6 rounded-full border-2 border-white" />
-        <img src="https://randomuser.me/api/portraits/men/41.jpg" className="w-6 h-6 rounded-full border-2 border-white" />
-        <span className="text-xs text-gray-500 ml-2">10+ applicants</span>
-      </div>
-
-      <div className="flex gap-2 justify-content-center">
-        
-        <a href={job.job_apply_link} target="_blank" rel="noreferrer" className="px-4 py-1 bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700">
+      <div className="flex gap-2">
+        <button onClick={handleApply} className="px-4 py-1 bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700">
           Apply now
-        </a>
-
-        <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3 ">
+        </button>
+        <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3">
           {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
         </button>
-
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ const Nav = () => {
                   </li>
                   <li className="text-purple-700 text-2xl">
                     <RouterLink to="/login">
-                      <FaSignOutAlt title="Go to Login" />
+                      <FaSignOutAlt title="Sign Out / Login" />
                     </RouterLink>
                   </li>
                   <li className="text-purple-900 text-2xl pl-3">
@@ -58,7 +58,15 @@ const Nav = () => {
                     <li><ScrollLink to="job" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">Find Jobs</ScrollLink></li>
                     <li><ScrollLink to="about" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">About Us</ScrollLink></li>
                     <li><ScrollLink to="contact" smooth={true} offset={-80} duration={200} onClick={() => setNavOpen(false)} className="cursor-pointer">Contact Us</ScrollLink></li>
-                    <li className="text-xl"><RouterLink to="/login"><FaUserCircle /></RouterLink></li>
+
+                    <li className="text-xl flex gap-4 mt-4">
+              <RouterLink to="/userprofile" onClick={() => setNavOpen(false)}>
+                <FaUserCircle title="User Profile" className="text-purple-900" />
+              </RouterLink>
+              <RouterLink to="/login" onClick={() => setNavOpen(false)}>
+                <FaSignOutAlt title="Sign Out / Login" className="text-purple-700" />
+              </RouterLink>
+            </li>
                   </ul>
                 )}
         

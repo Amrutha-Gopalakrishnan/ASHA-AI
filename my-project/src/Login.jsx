@@ -10,6 +10,8 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    
+
     const { data, error } = await supabase
       .from('register')
       .select('*')
@@ -22,6 +24,7 @@ function Login() {
     } else {
       // Optional: Save session info to localStorage
       localStorage.setItem('ashaUser', JSON.stringify(data));
+      console.log("User logged in:", data);
       navigate('/'); // Redirect to home
     }
   };

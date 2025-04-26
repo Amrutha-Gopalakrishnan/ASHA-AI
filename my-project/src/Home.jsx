@@ -1,10 +1,6 @@
 import React from "react";
-// import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
-// import { Link as RouterLink } from 'react-router-dom';
-// import { Link as ScrollLink } from 'react-scroll'
 
 const Home = () => {
-//   const [navOpen, setNavOpen] = useState(false);
 
   return (
     <div className="p-0">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import toast from 'react-hot-toast';
+import CareerAnalytics from './CareerAnalytics';
 
 export default function Dashboard() {
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -110,40 +111,16 @@ export default function Dashboard() {
   <p className="text-sm text-gray-600">90% profile completed (+10%)</p>
 </section>
 
-<section className="bg-white p-6 rounded-lg shadow mb-8">
-  <h3 className="text-xl font-semibold mb-4">Compare Saved vs Applied</h3>
-  <div className="flex justify-center">
-    <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
-      {/* Placeholder for Pie Chart */}
-      <span className="text-gray-500 text-sm">Pie Chart</span>
-    </div>
-  </div>
-</section>
 
-<section className="bg-white p-6 rounded-lg shadow mb-8">
-  <h3 className="text-xl font-semibold mb-4">Career Analytics Dashboard</h3>
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-center">
-      {/* Placeholder for Timeline Graph */}
-      <span className="text-gray-500 text-sm">Timeline Graph</span>
-    </div>
-    <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-center">
-      {/* Placeholder for Applications by Type */}
-      <span className="text-gray-500 text-sm">Applications by Type</span>
-    </div>
-    <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-center">
-      {/* Placeholder for Most Active Days */}
-      <span className="text-gray-500 text-sm">Most Active Days</span>
-    </div>
-  </div>
-</section>
 
-<section className="bg-white p-6 rounded-lg shadow mb-8">
-  <h3 className="text-xl font-semibold mb-4">Weekly Career Activity Snapshot</h3>
-  <p className="text-gray-600 text-sm mb-2">Jobs Viewed: 20</p>
-  <p className="text-gray-600 text-sm mb-2">Jobs Saved: 5</p>
-  <p className="text-gray-600 text-sm">Jobs Applied: 3</p>
-</section>
+<CareerAnalytics 
+  appliedJobs={appliedJobs} 
+  savedJobs={savedJobs} 
+  viewedJobs={viewedJobs} 
+/>
+
+
+
 
 <section className="bg-white p-6 rounded-lg shadow mb-8">
   <h3 className="text-xl font-semibold mb-4">Feedback & Help Center</h3>
@@ -169,13 +146,7 @@ export default function Dashboard() {
   </form>
 </section>
 
-<section className="bg-white p-6 rounded-lg shadow mb-8">
-  <h3 className="text-xl font-semibold mb-4">Weekly Impact Summary</h3>
-  <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-center">
-    {/* Placeholder for Summary Graph */}
-    <span className="text-gray-500 text-sm">Impact Graph</span>
-  </div>
-</section>
+
 
     </div>
   );

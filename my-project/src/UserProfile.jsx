@@ -1,102 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { supabase } from "./supabaseClient";
+import React, { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 import { FiMenu } from "react-icons/fi";
 import Dashboard from "./Dashboard";
 
-const ProfilePage = () => {
-  const initialProfileData = {
-    email:"",
+// Initialize Supabase client
+const supabaseUrl = "https://wodkxkcbdrlksnzerezz.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvZGt4a2NiZHJsa3NuemVyZXp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU1OTQ5MTYsImV4cCI6MjA2MTE3MDkxNn0.SV7zqbCCMnidBNT-IGYq0kN0eVRtQlJcvD6-_0ZWCLo";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export default function App() {
+  const [profile, setProfile] = useState({
     full_name: "",
     nickname: "",
     gender: "",
     country: "",
     language: "",
     time_zone: "",
-    job_title: "",
-    company: "",
-    experience: "",
-    career_objective: "",
-    skill: "",
-    skill_level: "Beginner",
-    degree: "",
-    university: "",
-    year_of_graduation: "",
-    linkedin_url: "",
-    portfolio_url: "",
-    github_url: "",
-    preferred_roles: "",
-    job_types: "",
-    locations: ""
-  };
+  });
 
-  const [profileData, setProfileData] = useState(initialProfileData);
-  const [originalData, setOriginalData] = useState(initialProfileData);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [activePage, setActivePage] = useState("profile");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const { 
-        data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-
-      if (user) {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        if (data) {
-          setProfileData({ ...initialProfileData, ...data });
-          setOriginalData({ ...initialProfileData, ...data });
-        }
-      }
-      setLoading(false);
-    };
-
-    fetchUserProfile();
-  }, []);
-
-
-const handleSaveChanges = async () => {
-    if (!user) {
-      alert("No user found. Are you logged in?");
-      return;
-    }
-  
-    const updatedProfile = {
-      ...profileData,
-      id: user.id,
-      email: user.email,
-    };
-  
-    const { error } = await supabase
-      .from("profiles")
-      .upsert(updatedProfile, { onConflict: ["id"] });
-  
-    if (error) {
-      console.error("Error saving profile:", error.message);
-      alert("Failed to save profile.");
-    } else {
-      setOriginalData(updatedProfile);
-      setIsEditing(false);
-      alert("Profile saved successfully!");
-    }
-  };
-  
-
-
-  const handleCancelChanges = () => {
-    setProfileData(originalData); // Reset to original data
-    setIsEditing(false);
-  };
 
   const handleChange = (e) => {
-    setProfileData({ ...profileData, [e.target.name]: e.target.value });
+    const { id, value } = e.target;
+    setProfile((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const saveProfile = async () => {
+    const { data, error } = await supabase.from("user_profiles").insert([
+      {
+        ...profile,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile.");
+    } else {
+      console.log("Profile saved successfully!", data);
+      alert("Profile saved successfully!");
+      setIsEditable(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await saveProfile();
+  };
+
+  const unlockFields = () => {
+    setIsEditable(true);
   };
 
   const toggleSidebar = () => {
@@ -106,39 +64,29 @@ const handleSaveChanges = async () => {
   const switchPage = (page) => {
     setActivePage(page);
     setSidebarOpen(false);
-    setIsEditing(false);
-    setProfileData(originalData); // Reset to original when switching page
   };
 
-  
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-xl font-semibold">Loading profile...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex min-h-screen ">
-      
+    <div className="flex h-screen">
       {/* Sidebar */}
       <div className="flex flex-col bg-purple-800 text-white">
-        <button
-          onClick={toggleSidebar}
-          className="p-4 focus:outline-none"
-        >
+        <button onClick={toggleSidebar} className="p-4 focus:outline-none">
           <FiMenu size={30} />
         </button>
 
         {sidebarOpen && (
           <div className="w-64 p-6">
             <ul>
-              <li className="mb-6 cursor-pointer hover:underline" onClick={() => switchPage("profile")}>
+              <li
+                className="mb-6 cursor-pointer hover:underline"
+                onClick={() => switchPage("profile")}
+              >
                 User Profile
               </li>
-              <li className="mb-6 cursor-pointer hover:underline" onClick={() => switchPage("dashboard")}>
+              <li
+                className="mb-6 cursor-pointer hover:underline"
+                onClick={() => switchPage("dashboard")}
+              >
                 Dashboard
               </li>
             </ul>
@@ -147,98 +95,127 @@ const handleSaveChanges = async () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1">
-       
-        {/* Navbar */}
-        <nav className="bg-purple-800 ">
-        <div className="flex justify-center items-center mb-8  ">
-          <h1 className="text-3xl font-bold " style={{color:"white"}}>
+      <main className="flex-1  bg-gray-100 overflow-auto">
+        <header className="bg-purple-700 text-white p-3 text-center">
+          <h1 className="text-2xl font-bold">
             {activePage === "profile" ? "User Profile" : "Dashboard"}
           </h1>
-        </div>
-        </nav>
-       
+        </header>
 
-        {/* Pages */}
         {activePage === "profile" && (
-          <div className="border p-6 rounded-md" id="user">
-            <h2 className="text-xl font-semibold text-purple-800 mb-8 text-center">
-              Manage your profile details
-            </h2>
+          <>
+        
+            <section className="bg-white border-2 border-purple-400 rounded-lg p-5 mt-5 flex justify-between items-center">
+                
+              <h2 className="text-lg font-semibold">
+                Managing your profile details
+              </h2>
+              <button
+                type="button"
+                onClick={unlockFields}
+                className="bg-purple-700 text-white py-2 px-4 rounded hover:bg-purple-800"
+              >
+                Edit Profile
+              </button>            
+             
+            </section>
 
-            {/* Edit/Save/Cancel buttons */}
-            <div className="flex gap-4 mb-6 mt-3 justify-center">
-              {!isEditing ? (
+            <div className="flex align-center justify-center mb-5 mt-4">
+              <p className="card w-120 text-center font-bold text-sm text-gray-600">
+                Note: Click "Edit Profile" before entering your details
+              </p>
+            </div>
+
+
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white border border-purple-400 rounded-lg p-5 mt-5 flex flex-col gap-4"
+            >
+              <h3 className="text-purple-700 text-xl mb-2">Personal Info</h3>
+
+              <input
+                id="full_name"
+                type="text"
+                placeholder="Enter your full name"
+                value={profile.full_name}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              <input
+                id="nickname"
+                type="text"
+                placeholder="Enter your nickname"
+                value={profile.nickname}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              <input
+                id="gender"
+                type="text"
+                placeholder="Enter your gender"
+                value={profile.gender}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              <input
+                id="country"
+                type="text"
+                placeholder="Enter your country"
+                value={profile.country}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              <input
+                id="language"
+                type="text"
+                placeholder="Enter your language"
+                value={profile.language}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              <input
+                id="time_zone"
+                type="text"
+                placeholder="Enter your time zone"
+                value={profile.time_zone}
+                onChange={handleChange}
+                readOnly={!isEditable}
+                className="p-2 border border-gray-300 rounded focus:outline-none"
+              />
+
+              {/* Actions */}
+              <div className="flex justify-end gap-4 mt-4">
                 <button
-                  onClick={() => setIsEditing(true)}
-                  className="bg-purple-700 text-white px-4 py-2 rounded"
+                  type="button"
+                  className="bg-purple-700 text-white py-2 px-4 rounded hover:bg-purple-800"
                 >
-                  Edit Profile
+                  Call Support
                 </button>
-              ) : (
-                <>
-                  <button
-                    onClick={handleSaveChanges}
-                    className="bg-green-600 text-white px-4 py-2 rounded"
-                  >
-                    Save Changes
-                  </button>
-                  <button
-                    onClick={handleCancelChanges}
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                  >
-                    Cancel
-                  </button>
-                </>
-              )}
-            </div>
-            
-            <div className="flex align-center justify-center">
-                <p className=" card w-120  text-center">Note: Click Edit Profile before entering your details</p>
-             </div>
-
-           
-
-            {/* Profile Form */}
-            <div className="row gap-4 mt-5">
-              {Object.keys(initialProfileData).map((key, idx) => (
-              
-                  
-                <div key={idx}>
-                  <label className="block text-purple-800 font-semibold mb-1">
-                    {key.replace(/_/g, " ").toUpperCase()}
-                  </label>
-                  <input
-                    type="text"
-                    name={key}
-                    value={profileData[key] || ""}
-                    onChange={handleChange}
-                    disabled={!isEditing }
-                    className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                    placeholder={`Enter your ${key.replace(/_/g, " ")}`}
-                  />
-                </div> 
-                  
-              ))}
-            </div>
-
-            
-          </div>
+                <button
+                  type="submit"
+                  className="bg-purple-700 text-white py-2 px-4 rounded hover:bg-purple-800"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </>
         )}
-
 
         {activePage === "dashboard" && (
           <Dashboard />
         )}
-      </div>
+      </main>
     </div>
   );
-};
-
-export default ProfilePage;
-
-
-
-
-
-
+}

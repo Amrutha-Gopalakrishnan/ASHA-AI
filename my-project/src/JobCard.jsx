@@ -71,8 +71,8 @@ export default function JobCard({ job }) {
       <p className="text-sm text-gray-700 mb-1">{job.employer_name}</p>
       <p className="text-xs text-gray-500 mb-4">{job.job_city}, {job.job_country}</p>
 
-      <div className="flex gap-2">
-        <button onClick={handleApply} className="px-4 py-1 bg-purple-600 text-white rounded-md text-sm font-medium hover:bg-purple-700">
+      <div className="flex gap-2 justify-center">
+        <button onClick={handleApply} className="px-4 py-1 bg-purple-600 text-white rounded text-center text-sm font-medium hover:bg-purple-700">
           Apply now
         </button>
         <button onClick={toggleBookmark} className="text-purple-700 text-xl ml-3">

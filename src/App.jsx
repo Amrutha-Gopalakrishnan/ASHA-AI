@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Home from './Home';
-import House from './House';
 import FindJobs from './FindJobs';
 import About from './About';
 import ContactForm from './ContactForm';
@@ -18,7 +17,6 @@ const MainPage = () => (
   <>
     <Nav />
     <Home />
-    <House />  
     <FindJobs />
     <About />
     <ContactForm />

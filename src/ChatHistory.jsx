@@ -3,11 +3,11 @@ import ReactMarkdown from "react-markdown";
 
 const ChatHistory = ({ chatHistory }) => {
   return (
-    <section className="space-y-3">
+    <section className="space-y-2">
       {chatHistory.map((message, index) => (
         <div
           key={index}
-          className={`p-3 rounded-md text-sm ${
+          className={`p-2 rounded-md text-sm break-words ${
             message.type === "user"
               ? "bg-white border border-gray-300 text-gray-800"
               : "bg-purple-600 text-white"

@@ -53,53 +53,99 @@ const ChatBot = () => {
 
   return (
     <>
-      {/* Logo Toggle Button */}
+      {/* Toggle Button for Chatbot */}
       <img
         src="images/logo.jpg"
         alt="chatbot logo"
         onClick={toggleChat}
-        className="fixed bottom-4 right-4 w-14 h-14 cursor-pointer z-50 transition-transform hover:scale-110"
+        className="fixed bottom-4 right-4 w-14 h-14 cursor-pointer z-50 transition-transform hover:scale-110 sm:w-16 sm:h-16"
       />
 
-      {/* ChatBot Box */}
+      {/* Chatbot Box */}
       {showChat && (
-        <div className="fixed bottom-20 right-4 w-[400px] max-h-[80vh] bg-white rounded-lg shadow-2xl flex flex-col z-40 overflow-hidden">
+        <div
+          className="
+            fixed bottom-20 right-4
+            w-[95vw] max-w-md max-h-[80vh]
+            bg-white rounded-lg shadow-2xl
+            flex flex-col z-40 overflow-hidden
+
+            /* For small screens: full width minus margin */
+            sm:w-[400px] sm:right-4 sm:bottom-20
+          "
+          style={{ minHeight: "300px" }}
+        >
+          {/* Header */}
           <div className="bg-purple-700 text-white text-center p-3 font-semibold">
             Meet ASHA AI
           </div>
 
+          {/* Chat history + Loading spinner */}
           <div className="flex-1 overflow-y-auto p-4 bg-gray-100">
             <ChatHistory chatHistory={chatHistory} />
             <Load isLoading={isLoading} />
           </div>
 
+          {/* Input area */}
           <div className="p-3 border-t bg-white">
-            <div className="flex gap-2">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage();
+              }}
+              className="flex flex-col sm:flex-row gap-2"
+            >
               <input
                 type="text"
-                className="flex-1 px-4 py-2 rounded border focus:outline-none focus:ring focus:ring-purple-400"
+                className="
+                  flex-grow
+                  px-4 py-2
+                  rounded border border-gray-300
+                  focus:outline-none focus:ring focus:ring-purple-400
+                  text-sm
+                  sm:text-base
+                "
                 placeholder="Type your message..."
                 value={userInput}
                 onChange={handleUserInput}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") sendMessage();
-                  }}
-              />
-              <button
-                onClick={sendMessage}
                 disabled={isLoading}
-                className="bg-purple-600 text-white px-2 py-2 rounded hover:bg-purple-700"
+              />
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="
+                  bg-purple-600
+                  text-white
+                  px-4 py-2
+                  rounded
+                  hover:bg-purple-700
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  text-sm sm:text-base
+                "
               >
                 Send
               </button>
+
               <button
+                type="button"
                 onClick={clearChat}
                 disabled={isLoading}
-                className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600"
+                className="
+                  bg-red-500
+                  text-white
+                  px-4 py-2
+                  rounded
+                  hover:bg-red-600
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  text-sm sm:text-base
+                "
               >
                 Clear
               </button>
-            </div>
+            </form>
           </div>
         </div>
       )}
